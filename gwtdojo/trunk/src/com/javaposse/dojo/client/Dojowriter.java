@@ -6,7 +6,6 @@ import com.allen_sauer.gwt.voices.client.Sound;
 import com.allen_sauer.gwt.voices.client.SoundController;
 import com.google.code.gwt.database.client.service.DataServiceException;
 import com.google.code.gwt.database.client.service.ListCallback;
-import com.google.code.gwt.database.client.service.RowIdListCallback;
 import com.google.code.gwt.database.client.service.VoidCallback;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -59,6 +58,7 @@ public class Dojowriter implements EntryPoint {
 			@Override
 			public void onSuccess(List<Document> result) {
 				documentsList.clear();
+				documentsList.removeAllRows();
 				for(final Document doc : result){
 					int row = documentsList.getRowCount();
 					documentsList.insertRow(row);
@@ -122,8 +122,9 @@ public class Dojowriter implements EntryPoint {
 		
 		
 		SoundController controller = new SoundController();
-		
+		controller.setPrioritizeFlashSound(true);
 		final Sound clickSound = controller.createSound(Sound.MIME_TYPE_AUDIO_MPEG, GWT.getModuleBaseURL()+"/Pop.mp3");
+		
 		
 		text.addKeyDownHandler(new KeyDownHandler(){
 
@@ -141,7 +142,6 @@ public class Dojowriter implements EntryPoint {
 				
 				doc.setText(text.getText());
 				doc.setTitle(title.getValue());
-				
 				if(doc.isNew()){
 					createDocument(doc);
 				} else {
@@ -155,24 +155,25 @@ public class Dojowriter implements EntryPoint {
 	
 	
 	private void createDocument(Document doc){
-		
-		dataService.createDocument(doc.getTitle(), doc.getText(), new RowIdListCallback(){
+		dataService.createDocument(doc, new VoidCallback(){
 
 			@Override
-			public void onSuccess(List<Integer> rowIds) {
+			public void onSuccess() {
 				showList();	
 			}
 
 			@Override
 			public void onFailure(DataServiceException error) {
+				error.printStackTrace();
 				Window.alert("Failed to insert new document");
+				GWT.log(null, error);
 			}
 			
 		});
 	}
 	
 	private void updateDocument(Document doc){
-		dataService.updateDocument(doc.getId(), doc.getTitle(), doc.getText(), new VoidCallback(){
+		dataService.updateDocument(doc, new VoidCallback(){
 
 			@Override
 			public void onSuccess() {
