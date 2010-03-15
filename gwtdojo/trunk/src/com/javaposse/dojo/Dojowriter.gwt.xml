@@ -9,6 +9,9 @@
   <inherits name='com.google.gwt.user.theme.standard.Standard'/>
   <!-- Other module inherits                                      -->
 
+  <inherits name="com.allen_sauer.gwt.voices.Voices" />
+  <inherits name="com.google.code.gwt.database.Html5Database" />
+
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.javaposse.dojo.client.Dojowriter'/>
 

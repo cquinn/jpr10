@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -43,6 +44,9 @@ public class Dojowriter implements EntryPoint {
 				Window.alert("Didn't Work");
 			}
 		 });
+		 
+		 RootPanel.get().add(mainPanel);
+		 
 		
 	}
 	
@@ -70,6 +74,24 @@ public class Dojowriter implements EntryPoint {
 						
 					});
 				}
+				
+				int row = documentsList.getRowCount();
+				Button newButton = new Button("New");
+				newButton.addClickHandler( new ClickHandler(){
+
+					@Override
+					public void onClick(ClickEvent event) {
+						showDocument(createDocument()); 
+					}
+					
+				});
+				
+				
+				
+				documentsList.insertRow(row);
+				documentsList.setWidget(row, 0, newButton);
+				
+				
 				mainPanel.setWidget(documentsList);
 			}
 
@@ -79,6 +101,11 @@ public class Dojowriter implements EntryPoint {
 			}
 		});
 	}
+	
+	
+	private final native Document createDocument()/*-{
+		return { title:"New Document", content:""};
+	}-*/;
 	
 	
 	private void showDocument(final Document doc){

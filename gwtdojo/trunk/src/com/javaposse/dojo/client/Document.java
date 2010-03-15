@@ -20,7 +20,7 @@ public class Document extends JavaScriptObject {
 		return this.id === undefined ? -1 : this.id;
 	}-*/;
 	
-	public boolean isNew(){
+	public final boolean isNew(){
 		return this.getId() == -1;
 	}
 	
