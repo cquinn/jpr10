@@ -17,9 +17,12 @@ public class Document extends JavaScriptObject {
 	}-*/;
 	
 	public final native int getId() /*-{
-		return this.id;
+		return this.id === undefined ? -1 : this.id;
 	}-*/;
 	
+	public boolean isNew(){
+		return this.getId() == -1;
+	}
 	
 	public final native String getTitle()/*-{
 		return this.title;
