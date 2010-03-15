@@ -9,7 +9,7 @@ import com.google.code.gwt.database.client.service.Update;
 import com.google.code.gwt.database.client.service.VoidCallback;
 
 
-@Connection(name="Document", version="1.0	",
+@Connection(name="Document", version="1.0",
 	    description="DocumentsDatabase", maxsize=10000)
 public interface DocumentDataService extends DataService {
 
@@ -25,7 +25,7 @@ public interface DocumentDataService extends DataService {
   @Update("INSERT INTO documents (title, content) VALUES ( {document.getTitle()}, {document.getText()}  )")
   void createDocument(Document document, VoidCallback callback );
   
-  @Update("UPDATE documents SET title = {document.getTitle()}, content = {document.getText()} WHERE id = {document.getId()}")
-  void updateDocument(Document document, VoidCallback callback);
+  @Update("UPDATE documents SET title = {title}, content = {text} WHERE id = {id}")
+  void updateDocument(int id, String title, String text, VoidCallback callback);
 	
 }
