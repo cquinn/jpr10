@@ -19,6 +19,7 @@
 	left: 10%;
 	background-color: white;
 	opacity: 0.5;
+	z-index: 0;
 }
 
 
@@ -29,35 +30,71 @@
 	top: 10%;
 	left: 10%;
 	color: black;	
+	z-index: 5;
+	font-family: Verdana;
 }
 
 .title {
-	border: 1px dashed silver;
-	width: 80%;
+	border: 1px dashed black;
+	width: 81.5%;
 	position: relative;
 	left: 10%;
 	top: 5%;
 	background-color: transparent;
-	opacity: 2.0;
+	opacity: 1.0;
 	display: block;
+	text-size: 18pt;
+	margin: 5px;
+	padding: 5px;
+}
+
+.titleNoBorder {
+	border: 1px solid transparent;
+	width: 81.5%;
+	position: relative;
+	left: 10%;
+	top: 5%;
+	background-color: transparent;
+	opacity: 1.0;
+	display: block;
+	text-size: 18pt;
+	margin: 5px;
+	padding: 5px;
 }
 
 .richText {
-	border: 1px dashed silver;
+	border: 1px dashed black;
 	width: 80%;
 	height: 80%;
 	position: relative;
 	top: 5%;
 	left: 10%;
 	background-color: transparent;
-	opacity: 2.0;
+	opacity: 1.0;
 	display: block;
+	margin: 5px;
+	padding: 5px;
+}
+
+
+.richTextNoBorder {
+	border: 1px solid transparent;
+	width: 80%;
+	height: 80%;
+	position: relative;
+	top: 5%;
+	left: 10%;
+	background-color: transparent;
+	opacity: 1.0;
+	display: block;
+	margin: 5px;
+	padding: 5px;
 }
 
 
 .button {
 	position: relative;
-	top: 10%;
+	top: 5%;
 	left: 80%;
 	display: block;
 }

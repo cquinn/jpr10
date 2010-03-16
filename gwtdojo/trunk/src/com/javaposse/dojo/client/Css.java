@@ -9,6 +9,9 @@ public interface Css extends CssResource {
 	String mainPanel();
 	String richText();
 	String title();
+	String titleNoBorder();
 	String button();
 	String glassPane();
+	String richTextNoBorder();
+	
 }

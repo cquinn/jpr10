@@ -29,7 +29,7 @@ public class Document extends JavaScriptObject {
 	}-*/;
 
 	public final native void setTitle(String title)/*-{
-		this.title = tile;
+		this.title = title;
 	}-*/;
 	
 	

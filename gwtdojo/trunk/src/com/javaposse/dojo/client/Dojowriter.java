@@ -10,14 +10,24 @@ import com.google.code.gwt.database.client.service.VoidCallback;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.StyleInjector;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
@@ -55,7 +65,7 @@ public class Dojowriter implements EntryPoint {
 	}
 	
 	
-	final SimplePanel mainPanel = new SimplePanel();
+	final FocusPanel mainPanel = new FocusPanel();
 	final FlexTable documentsList = new FlexTable();
 	
 	private void showList(){
@@ -114,11 +124,12 @@ public class Dojowriter implements EntryPoint {
 	
 	
 	private final native Document createDocument()/*-{
-		return { title:"New Document", content:""};
+		return { title:"New Document", content:"<html><head><style> * { font-family: Verdana; }</style></head></body></html>"};
 	}-*/;
 	
 	
 	private void showDocument(final Document doc){
+		
 		final FlowPanel vp = new FlowPanel();
 		final TextBox title = new TextBox();
 		title.setStyleName(resources.css().title());
@@ -137,6 +148,51 @@ public class Dojowriter implements EntryPoint {
 		text.setHTML(doc.getText());
 		
 		
+		final Timer t = new Timer(){
+
+			@Override
+			public void run() {
+				save.getElement().getStyle().setDisplay(Display.NONE);
+				title.setStyleName(resources.css().titleNoBorder());
+				text.setStyleName(resources.css().richTextNoBorder());
+			}
+			
+		};
+		
+		final HandlerRegistration moveReg = mainPanel.addMouseMoveHandler(new MouseMoveHandler() {
+
+			@Override
+			public void onMouseMove(MouseMoveEvent event) {
+				t.cancel();
+				t.schedule(2000);
+			}
+			
+		});
+		
+		
+		final HandlerRegistration overReg = mainPanel.addMouseOverHandler(new MouseOverHandler(){
+
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				save.getElement().getStyle().setDisplay(Display.BLOCK);
+				title.setStyleName(resources.css().title());
+				text.setStyleName(resources.css().richText());
+			}
+			
+		});
+		
+		final HandlerRegistration overReg2 = mainPanel.addMouseOutHandler(new MouseOutHandler(){
+
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				save.getElement().getStyle().setDisplay(Display.NONE);
+				title.setStyleName(resources.css().titleNoBorder());
+				text.setStyleName(resources.css().richTextNoBorder());
+			}
+
+			
+		});
+		
 		SoundController controller = new SoundController();
 		controller.setPrioritizeFlashSound(true);
 		final Sound clickSound = controller.createSound(Sound.MIME_TYPE_AUDIO_MPEG, GWT.getModuleBaseURL()+"/Pop.mp3");
@@ -147,6 +203,9 @@ public class Dojowriter implements EntryPoint {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
 				clickSound.play();
+				save.getElement().getStyle().setDisplay(Display.NONE);
+				title.setStyleName(resources.css().titleNoBorder());
+				text.setStyleName(resources.css().richTextNoBorder());
 			}
 			
 		});
@@ -158,6 +217,9 @@ public class Dojowriter implements EntryPoint {
 				
 				doc.setText(text.getHTML());
 				doc.setTitle(title.getValue());
+				overReg.removeHandler();
+				overReg2.removeHandler();
+				moveReg.removeHandler();
 				if(doc.isNew()){
 					createDocument(doc);
 				} else {
