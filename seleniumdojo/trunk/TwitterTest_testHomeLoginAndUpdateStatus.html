@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://twitter.com/" />
+<title>TwitterTest_testHomeLoginAndUpdateStatus</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TwitterTest_testHomeLoginAndUpdateStatus</td></tr>
+</thead><tbody>
+<!--Clean up-->
+<tr>
+	<td>deleteAllVisibleCookies</td>
+	<td></td>
+	<td></td>
+</tr>
+<!--Home page log in-->
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='topnav']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>username</td>
+	<td>joesondowjpr10</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>password</td>
+	<td>clarksmarket</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>signin_submit</td>
+	<td></td>
+</tr>
+<!--Prepare status-->
+<tr>
+	<td>store</td>
+	<td>javascript{new Date().getTime()}</td>
+	<td>date</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>Looking for fun and feeling groovy ${date} times</td>
+	<td>message</td>
+</tr>
+<!--Verify status is absent-->
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>${message}</td>
+	<td></td>
+</tr>
+<!--Update status-->
+<tr>
+	<td>type</td>
+	<td>status</td>
+	<td>${message}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>update-submit</td>
+	<td></td>
+</tr>
+<!--Verify result-->
+<tr>
+	<td>waitForTextPresent</td>
+	<td>${message}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>${message}</td>
+	<td></td>
+</tr>
+<!--Clean up-->
+<tr>
+	<td>deleteAllVisibleCookies</td>
+	<td></td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
