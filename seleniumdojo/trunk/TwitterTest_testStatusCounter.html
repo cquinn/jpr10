@@ -49,16 +49,28 @@
 	<td></td>
 </tr>
 <!--Initial counter value-->
+<!--Disabled button-->
+<tr>
+	<td>verifyAttribute</td>
+	<td>update-submit@class</td>
+	<td>*btn-disabled*</td>
+</tr>
 <tr>
 	<td>verifyText</td>
 	<td>status-field-char-counter</td>
 	<td>140</td>
 </tr>
 <!--Type characters-->
+<!--Enables button-->
 <tr>
 	<td>type</td>
 	<td>status</td>
 	<td>Hello lamppost</td>
+</tr>
+<tr>
+	<td>verifyNotAttribute</td>
+	<td>update-submit@class</td>
+	<td>*btn-disabled*</td>
 </tr>
 <tr>
 	<td>verifyText</td>
@@ -66,21 +78,21 @@
 	<td>126</td>
 </tr>
 <!--Exceed max length-->
+<!--Disables button-->
 <tr>
 	<td>type</td>
 	<td>status</td>
 	<td>Hello lamppost, whatcha knowin'? I come to watch your flowers growin'. Aintcha got no rhymes for me. Doo Bee Doo Doo, Feelin' groovy. Got no deeds to do, no promises to keep.</td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>status-field-char-counter</td>
-	<td>-34</td>
-</tr>
-<!--Too long to submit-->
-<tr>
 	<td>verifyAttribute</td>
 	<td>update-submit@class</td>
 	<td>*btn-disabled*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>status-field-char-counter</td>
+	<td>-34</td>
 </tr>
 <!--Clean up-->
 <tr>
